@@ -1,0 +1,14 @@
+- name: "Uinstall all"
+  hosts: all
+  become: true
+  tasks:
+    - name: "Check distribution NGINX"
+      debug:
+        var: ansible_facts['distribution']
+    - name: Uninstall NGINX on Unbutun
+      apt:  name=nginxi state=absent
+      when: ansible_facts['distribution'] == "Ubuntu"
+
+    - name: Uninstall NGINX on CentOS
+      yum: name=nginx state=absent
+      when: ansible_facts['distribution'] == "CentOS"
